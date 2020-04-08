@@ -1,8 +1,11 @@
 package logging
 
 import (
+	"fmt"
 	"io"
 	"log"
+	"sort"
+	"strings"
 )
 
 type defaultLogger struct {
@@ -43,5 +46,24 @@ func print(l *log.Logger, msg string, data ...F) {
 		return
 	}
 
-	l.Printf("%s %v", msg, data)
+	var builder strings.Builder
+
+	builder.WriteString(msg)
+
+	for _, d := range data {
+		for _, k := range sortkeys(d) {
+			builder.WriteString(fmt.Sprintf("\n\t%s: %v", k, d[k]))
+		}
+	}
+
+	l.Println(builder.String())
+}
+
+func sortkeys(data F) []string {
+	keys := make([]string, 0, len(data))
+	for k := range data {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	return keys
 }

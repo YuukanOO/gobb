@@ -38,8 +38,8 @@ func TestDefaultLogger(t *testing.T) {
 					"another": 1,
 				},
 			},
-			outExpected: regexp.MustCompile("^INFO\\t.*this message contains one data dict \\[map\\[a:value another:1\\]\\]\\n$"),
-			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains one data dict \\[map\\[a:value another:1\\]\\]\\n$"),
+			outExpected: regexp.MustCompile("^INFO\\t.*this message contains one data dict\\n\\ta: value\\n\\tanother: 1\\n$"),
+			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains one data dict\\n\\ta: value\\n\\tanother: 1\\n$"),
 		},
 		{
 			name:    "message with one data and debug",
@@ -51,8 +51,8 @@ func TestDefaultLogger(t *testing.T) {
 				},
 			},
 			debug:       true,
-			outExpected: regexp.MustCompile("^INFO\\t.*this message contains one data dict \\[map\\[a:value another:1\\]\\]\\n$"),
-			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains one data dict \\[map\\[a:value another:1\\]\\]\\n$"),
+			outExpected: regexp.MustCompile("^INFO\\t.*this message contains one data dict\\n\\ta: value\\n\\tanother: 1\\n$"),
+			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains one data dict\\n\\ta: value\\n\\tanother: 1\\n$"),
 		},
 		{
 			name:    "message with many data",
@@ -66,8 +66,8 @@ func TestDefaultLogger(t *testing.T) {
 					"second": "dict",
 				},
 			},
-			outExpected: regexp.MustCompile("^INFO\\t.*this message contains two data dicts \\[map\\[a:value another:1\\] map\\[second:dict\\]\\]\\n$"),
-			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains two data dicts \\[map\\[a:value another:1\\] map\\[second:dict\\]\\]\\n$"),
+			outExpected: regexp.MustCompile("^INFO\\t.*this message contains two data dicts\\n\\ta: value\\n\\tanother: 1\\n\\tsecond: dict\\n$"),
+			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains two data dicts\\n\\ta: value\\n\\tanother: 1\\n\\tsecond: dict\\n$"),
 		},
 		{
 			name:    "message with many data and debug",
@@ -82,8 +82,8 @@ func TestDefaultLogger(t *testing.T) {
 				},
 			},
 			debug:       true,
-			outExpected: regexp.MustCompile("^INFO\\t.*this message contains two data dicts \\[map\\[a:value another:1\\] map\\[second:dict\\]\\]\\n$"),
-			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains two data dicts \\[map\\[a:value another:1\\] map\\[second:dict\\]\\]\\n$"),
+			outExpected: regexp.MustCompile("^INFO\\t.*this message contains two data dicts\\n\\ta: value\\n\\tanother: 1\\n\\tsecond: dict\\n$"),
+			errExpected: regexp.MustCompile("^ERROR\\t.*this message contains two data dicts\\n\\ta: value\\n\\tanother: 1\\n\\tsecond: dict\\n$"),
 		},
 	}
 
