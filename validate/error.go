@@ -2,14 +2,10 @@ package validate
 
 import "fmt"
 
-const (
-	// ErrCode in the DomainError returned by Guard.
-	ErrCode = "validation_failed"
-	// ErrMessage in the DomainError returned by Guard.
-	ErrMessage = "some validation has failed"
-)
-
 type (
+	// Errors maps field names to a validation error string.
+	Errors map[string]string
+
 	// ValidationErrors maps field name to field errors and implements
 	// the Error interface.
 	ValidationErrors map[string]string
@@ -27,4 +23,8 @@ func (e *FieldError) Error() string {
 
 func (e *ValidationErrors) Error() string {
 	return fmt.Sprintf("validation has failed: %v", *e)
+}
+
+func (e Errors) Error() string {
+	return fmt.Sprintf("validation has failed with %d errors", len(e))
 }

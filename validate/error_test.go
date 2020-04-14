@@ -25,3 +25,12 @@ func TestValidationErrorsString(t *testing.T) {
 
 	assert.Equals(t, "validation has failed: map[avatarUrl:url firstName:required lastName:required]", err.Error(), "error representation should match")
 }
+
+func TestErrorsString(t *testing.T) {
+	err := Errors{
+		"firstName": "required",
+		"nickName":  "min:6",
+	}
+
+	assert.Equals(t, "validation has failed with 2 errors", err.Error(), "error representation should match")
+}

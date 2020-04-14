@@ -16,4 +16,4 @@ Every code in this repo should be tested because it represents the foundation on
 - `errors/`: in every application, you'll have domain specific errors which represents an expected error in the system. This package provides a `DomainError` which you can instantiate using the `errors.New` or `errors.NewWithErr` methods.
 - `event/`: provides some stuff to easily write aggregates which could store domain events and dispatchers to forward them to handlers. I really like this approach (see associated tests) because when every state change of an entity is represented as an event, it makes it really easy to extend an application and observe it.
 - `logging/`: who doesn't need logging after all? It provides a simple `Logger` interface and a default implementation which writes to given `io.Writer`.
-- `validate/`: validation should be easy and type safe. I used to rely on the go-playground validation library but I find struct tags error prone and validation should be a primary concern to avoid invalid state in your domain so here is my approach.
+- `validate/`: this one is a WIP, it's hard to find a great way to deal with validation so keep tuned ;)
