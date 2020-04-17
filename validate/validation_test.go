@@ -1,6 +1,7 @@
 package validate
 
 import (
+	be "errors"
 	"testing"
 
 	"github.com/yuukanoo/gobb/assert"
@@ -22,7 +23,7 @@ func TestValidation(t *testing.T) {
 		{
 			name:  "no data",
 			given: user{},
-			err: errors.NewWithErr(ErrCode, ErrMessage, Errors{
+			err: errors.NewWithErr(ErrCode, ErrMessage, &Errors{
 				"FirstName": "required",
 				"lastName":  "required",
 				"NickName":  "required",
@@ -31,7 +32,7 @@ func TestValidation(t *testing.T) {
 		{
 			name:  "with nickname not respecting validation with param",
 			given: user{NickName: "joe"},
-			err: errors.NewWithErr(ErrCode, ErrMessage, Errors{
+			err: errors.NewWithErr(ErrCode, ErrMessage, &Errors{
 				"FirstName": "required",
 				"lastName":  "required",
 				"NickName":  "min:6",
@@ -56,4 +57,19 @@ func TestValidation(t *testing.T) {
 			assert.Nil(t, err, "should not have any error")
 		})
 	}
+}
+
+func TestValidationAs(t *testing.T) {
+	err := Struct(user{})
+
+	assert.NotNil(t, err, "should have a validation error")
+
+	target := &Errors{}
+
+	assert.True(t, be.As(err, &target), "should be convertible to an Errors")
+	assert.Equals(t, &Errors{
+		"FirstName": "required",
+		"lastName":  "required",
+		"NickName":  "required",
+	}, target, "errors should match")
 }

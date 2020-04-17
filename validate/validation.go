@@ -47,7 +47,7 @@ func Struct(data interface{}) error {
 			errorsMap[fe.Field()] = tag
 		}
 
-		return errors.NewWithErr(ErrCode, ErrMessage, errorsMap)
+		return errors.NewWithErr(ErrCode, ErrMessage, &errorsMap)
 	}
 
 	return nil
