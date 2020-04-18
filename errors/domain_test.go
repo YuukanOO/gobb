@@ -32,8 +32,10 @@ func TestNewWithErr(t *testing.T) {
 
 func TestErrorString(t *testing.T) {
 	err := New("a_code", "an explanation")
-
 	assert.Equals(t, "a_code: an explanation", err.Error(), "error string should match")
+
+	err = NewWithErr("a_code", "an explanation", errors.New("an inner err"))
+	assert.Equals(t, "a_code: an explanation\n\tan inner err", err.Error(), "error string should match")
 }
 
 func TestUnwrap(t *testing.T) {
@@ -73,4 +75,13 @@ func TestExtensionsWithInner(t *testing.T) {
 		"message": "an explanation",
 		"details": wrappedErr,
 	}, err.Extensions(), "extensions dict should match")
+}
+
+func TestAny(t *testing.T) {
+	assert.Nil(t, Any(nil, nil, nil), "should returns no error")
+
+	err := errors.New("one error")
+
+	assert.Equals(t, err, Any(nil, err), "should returns the err")
+	assert.Equals(t, err, Any(err, nil, nil), "should returns the err")
 }

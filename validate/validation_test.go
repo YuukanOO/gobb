@@ -35,7 +35,7 @@ func TestValidation(t *testing.T) {
 			err: errors.NewWithErr(ErrCode, ErrMessage, &Errors{
 				"FirstName": "required",
 				"lastName":  "required",
-				"NickName":  "min:6",
+				"NickName":  "min=6",
 			}),
 		},
 		{

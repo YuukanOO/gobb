@@ -33,7 +33,12 @@ func NewWithErr(code, message string, inner error) error {
 }
 
 func (e *DomainError) Error() string {
-	return fmt.Sprintf("%s: %s", e.Code, e.Message)
+	if e.Inner == nil {
+		return fmt.Sprintf("%s: %s", e.Code, e.Message)
+	}
+
+	return fmt.Sprintf(`%s: %s
+	%s`, e.Code, e.Message, e.Inner)
 }
 
 // Unwrap the DomainError inner error.
@@ -54,4 +59,15 @@ func (e *DomainError) Extensions() map[string]interface{} {
 	}
 
 	return ext
+}
+
+// Any returns the first non-nil error it founds or nil if no errors has been
+// given.
+func Any(errs ...error) error {
+	for _, err := range errs {
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
