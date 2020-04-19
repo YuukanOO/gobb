@@ -61,13 +61,18 @@ func (e *DomainError) Extensions() map[string]interface{} {
 	return ext
 }
 
-// Any returns the first non-nil error it founds or nil if no errors has been
+// First returns the first non-nil error it founds or nil if no errors has been
 // given.
-func Any(errs ...error) error {
+func First(errs ...error) error {
 	for _, err := range errs {
 		if err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+// Any checks if at least one error is non-nil in the given arguments.
+func Any(errs ...error) bool {
+	return First(errs...) != nil
 }

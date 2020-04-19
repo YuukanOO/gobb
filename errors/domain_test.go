@@ -77,11 +77,20 @@ func TestExtensionsWithInner(t *testing.T) {
 	}, err.Extensions(), "extensions dict should match")
 }
 
-func TestAny(t *testing.T) {
-	assert.Nil(t, Any(nil, nil, nil), "should returns no error")
+func TestFirst(t *testing.T) {
+	assert.Nil(t, First(nil, nil, nil), "should returns no error")
 
 	err := errors.New("one error")
 
-	assert.Equals(t, err, Any(nil, err), "should returns the err")
-	assert.Equals(t, err, Any(err, nil, nil), "should returns the err")
+	assert.Equals(t, err, First(nil, err), "should returns the err")
+	assert.Equals(t, err, First(err, nil, nil), "should returns the err")
+}
+
+func TestAny(t *testing.T) {
+	assert.False(t, Any(nil, nil, nil), "should returns no error")
+
+	err := errors.New("one error")
+
+	assert.True(t, Any(nil, err), "should returns true since one error exists")
+	assert.True(t, Any(err, nil, nil), "should returns true since one error exists")
 }
