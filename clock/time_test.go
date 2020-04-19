@@ -20,5 +20,5 @@ func TestClockWithFunc(t *testing.T) {
 		NowFn: func() time.Time { return before },
 	}
 
-	assert.Equals(t, before, ti.Now(), "should use the given NowFn")
+	assert.Equals(t, before, ti.Now().Time, "should use the given NowFn")
 }
